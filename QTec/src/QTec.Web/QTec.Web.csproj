@@ -107,7 +107,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -130,6 +129,10 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\QTec.Business\QTec.Business.csproj">
+      <Project>{69dea6f9-4722-4d1f-8656-9161ded3680d}</Project>
+      <Name>QTec.Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\QTec.Core\QTec.Core.csproj">
       <Project>{b8b73f98-d54f-4673-a42e-122bbf060974}</Project>
       <Name>QTec.Core</Name>

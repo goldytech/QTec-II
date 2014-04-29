@@ -10,6 +10,8 @@ namespace QTec.Web
 
     using Microsoft.Practices.Unity.Mvc;
 
+    using QTec.Business;
+
     /// <summary>Provides the bootstrapping for integrating Unity with ASP.NET MVC.</summary>
     public static class UnityWebActivator
     {

@@ -7,10 +7,11 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace QTec.Web
+namespace QTec.Business
 {
     using System;
 
+    using Microsoft.Practices.ServiceLocation;
     using Microsoft.Practices.Unity;
 
     /// <summary>
@@ -59,6 +60,13 @@ namespace QTec.Web
 
             // TODO: Register your types here
             // container.RegisterType<IProductRepository, ProductRepository>();
+
+            // setup service locator
+
+            var provider = new UnityServiceLocator(container);
+            ServiceLocator.SetLocatorProvider(() => provider);
+
+            
         }
     }
 }
