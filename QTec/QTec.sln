@@ -22,6 +22,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{A4C6C9A3-9
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QTec.Core", "src\QTec.Core\QTec.Core.csproj", "{B8B73F98-D54F-4673-A42E-122BBF060974}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QTec.Data", "src\QTec.Data\QTec.Data.csproj", "{EB7A348F-11E4-4F0A-BBB1-E4064D31FD85}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".solutionItems", ".solutionItems", "{DE59F5F6-FE22-404E-B652-47CFFC0B6A60}"
+	ProjectSection(SolutionItems) = preProject
+		solutionItems\GlobalSuppressions.cs = solutionItems\GlobalSuppressions.cs
+		solutionItems\qtec.snk = solutionItems\qtec.snk
+		solutionItems\standard.ruleset = solutionItems\standard.ruleset
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +45,10 @@ Global
 		{B8B73F98-D54F-4673-A42E-122BBF060974}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8B73F98-D54F-4673-A42E-122BBF060974}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8B73F98-D54F-4673-A42E-122BBF060974}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB7A348F-11E4-4F0A-BBB1-E4064D31FD85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB7A348F-11E4-4F0A-BBB1-E4064D31FD85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB7A348F-11E4-4F0A-BBB1-E4064D31FD85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB7A348F-11E4-4F0A-BBB1-E4064D31FD85}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -45,6 +58,7 @@ Global
 		{2D13ECB7-9A20-4D09-8177-65CEEB45A4E5} = {6E8B0097-ECDB-4F7E-85D2-44C9BD17A977}
 		{A4C6C9A3-9086-4F74-A2E0-63B361EE019F} = {6E8B0097-ECDB-4F7E-85D2-44C9BD17A977}
 		{36D85D5E-CD50-48F3-9930-7718DC0E75D3} = {39BB2BF8-1A87-4ED4-BD6A-ECF3A5B630A5}
+		{EB7A348F-11E4-4F0A-BBB1-E4064D31FD85} = {2D13ECB7-9A20-4D09-8177-65CEEB45A4E5}
 		{B8B73F98-D54F-4673-A42E-122BBF060974} = {A4C6C9A3-9086-4F74-A2E0-63B361EE019F}
 	EndGlobalSection
 EndGlobal

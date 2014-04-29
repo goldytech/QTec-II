@@ -1,11 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="IDataRepository.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   The DataRepository interface.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace QTec.Core.Contracts
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
     /// <summary>
     /// The DataRepository interface.
     /// </summary>
@@ -32,7 +38,7 @@ namespace QTec.Core.Contracts
         /// <returns>
         /// The <see cref="ICollection"/>.
         /// </returns>
-        Task<IEnumerable<TEntity>> GetAllAsync();
+        Task<IEnumerable<TEntity>> RetrieveAllRecordsAsync();
 
         /// <summary>
         /// The insert.
