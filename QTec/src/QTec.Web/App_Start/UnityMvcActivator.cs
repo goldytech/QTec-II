@@ -1,3 +1,12 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="UnityMvcActivator.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   Provides the bootstrapping for integrating Unity with ASP.NET MVC.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
 using QTec.Web;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(UnityWebActivator), "Start")]
