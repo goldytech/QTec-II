@@ -1,0 +1,16 @@
+﻿@using QTec.Core.Model
+@model IEnumerable<QTec.Core.Model.Employee>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>title</h2>
+
+
+@foreach (var fullName in Model.Select(employee => employee.FirstName + employee.LastName))
+{
+    <span>@fullName</span>
+    <br/>
+}
