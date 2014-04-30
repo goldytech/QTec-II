@@ -1,4 +1,13 @@
-﻿namespace QTec.Data
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="QTecDataContext.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   The QTec data context.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace QTec.Data
 {
     using System.Data.Entity;
 
@@ -15,7 +24,7 @@
         public QTecDataContext() : base("nameOrConnectionString:QTec")
         {
             this.Configuration.ProxyCreationEnabled = false;
-          //  Database.SetInitializer(new QTecDbInitializer());
+           Database.SetInitializer(new QTecDbInitializer());
         }
 
         /// <summary>

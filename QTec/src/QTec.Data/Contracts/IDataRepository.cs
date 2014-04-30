@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace QTec.Core.Contracts
+namespace QTec.Data.Contracts
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;

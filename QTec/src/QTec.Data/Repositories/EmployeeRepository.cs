@@ -3,65 +3,58 @@
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
+    using System.Runtime.InteropServices;
     using System.Threading.Tasks;
-    using QTec.Core.Contracts;
+
     using QTec.Core.Model;
+    using QTec.Data.Contracts;
 
     /// <summary>
     /// The employee repository.
     /// </summary>
     public class EmployeeRepository : IEmployeeRepository
     {
-        #region IEmployeeRepository implementation
+        private readonly QTecDataContext dataContext;
 
         /// <summary>
-        /// The get by id async.
+        /// Initializes a new instance of the <see cref="EmployeeRepository"/> class.
         /// </summary>
-        /// <param name="id">
-        /// The id.
+        /// <param name="dataContext">
+        /// The data context.
         /// </param>
-        /// <returns>
-        /// The <see cref="Task"/>.
-        /// </returns>
-        public  Task<Employee> GetByIdAsync(int id)
+        public EmployeeRepository(QTecDataContext dataContext)
         {
-            return Task.Run(async 
-                () =>
-                    {
-                        Employee employee;
-                        using (var db = new QTecDataContext())
-                        {
-                            employee = await db.Employees.SingleAsync(e=>e.EmployeeId.Equals(id));
-                        }
+            this.dataContext = dataContext;
+           
+        }
 
+        public Task<Employee> GetByIdAsync(int id)
+        {
+
+            return Task.Run(
+                async () =>
+
+                    {
+                        Employee employee = await this.dataContext.Employees.SingleOrDefaultAsync(e => e.EmployeeId.Equals(id));
                         return employee;
                     });
+
         }
 
         public Task<IEnumerable<Employee>> RetrieveAllRecordsAsync()
         {
             return Task.Run(async () =>
-                    {
-                        IEnumerable<Employee> employees;
-                        using (var db =new QTecDataContext())
-                        {
-                            employees = await db.Employees.OrderBy(e=>e.FirstName).ToListAsync();
-                        }
-                        return employees;
-                    });
+                {
+                    IEnumerable<Employee> employees = await this.dataContext.Employees.OrderBy(e => e.FirstName).ToListAsync();
+
+                    return employees;
+                });
         }
 
         public Task Insert(Employee entity)
         {
             return Task.Run(
-                async () =>
-                    {
-                        using (var db = new QTecDataContext())
-                        {
-                            db.Employees.Add(entity);
-                            await db.SaveChangesAsync();
-                        }
-                    });
+                () => { this.dataContext.Employees.Add(entity); });
         }
 
         public Task Update(Employee entity)
@@ -69,26 +62,15 @@
             return Task.Run(
                 () =>
                     {
-                        using (var db = new QTecDataContext())
-                        {
-                            db.Entry(entity).State = EntityState.Modified;
-                            db.SaveChanges();
-                        }
+                        this.dataContext.Employees.Attach(entity);
+                        this.dataContext.Entry(entity).State = EntityState.Modified;
                     });
         }
 
         public Task Delete(Employee entity)
         {
             return Task.Run(
-                () =>
-                    {
-                        using (var db = new QTecDataContext())
-                        {
-                            db.Employees.Remove(entity);
-                            db.SaveChanges();
-                        }
-                    });
-        } 
-        #endregion
+                () => { this.dataContext.Employees.Remove(entity); });
+        }
     }
 }

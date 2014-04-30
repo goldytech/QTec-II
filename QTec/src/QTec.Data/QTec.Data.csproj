@@ -49,10 +49,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\IDataRepository.cs" />
+    <Compile Include="Contracts\IEmployeeRepository.cs" />
+    <Compile Include="IQTecUnitOfWork.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QTecDataContext.cs" />
     <Compile Include="QTecDbInitializer.cs" />
+    <Compile Include="QTecUnitOfWork.cs" />
     <Compile Include="Repositories\EmployeeRepository.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -51,8 +51,6 @@
     <Compile Include="..\..\solutionItems\GlobalSuppressions.cs">
       <Link>GlobalSuppressions.cs</Link>
     </Compile>
-    <Compile Include="Contracts\IDataRepository.cs" />
-    <Compile Include="Contracts\IEmployeeRepository.cs" />
     <Compile Include="Model\Designation.cs" />
     <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\EmployeeLanguages.cs" />
