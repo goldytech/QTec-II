@@ -45,6 +45,7 @@
       <HintPath>..\..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -68,10 +69,6 @@
     <ProjectReference Include="..\QTec.Core\QTec.Core.csproj">
       <Project>{b8b73f98-d54f-4673-a42e-122bbf060974}</Project>
       <Name>QTec.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\QTec.Data\QTec.Data.csproj">
-      <Project>{eb7a348f-11e4-4f0a-bbb1-e4064d31fd85}</Project>
-      <Name>QTec.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

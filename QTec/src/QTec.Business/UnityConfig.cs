@@ -14,6 +14,8 @@ namespace QTec.Business
     using Microsoft.Practices.ServiceLocation;
     using Microsoft.Practices.Unity;
 
+    using QTec.Data;
+
     /// <summary>
     /// Specifies the Unity configuration for the main container.
     /// </summary>
@@ -52,14 +54,22 @@ namespace QTec.Business
             // NOTE: To load from web.config uncomment the line below. Make sure to add a Microsoft.Practices.Unity.Configuration to the using statements.
             
             // container.LoadConfiguration();
-            container.RegisterTypes(
-                AllClasses.FromLoadedAssemblies(),
-                WithMappings.FromMatchingInterface,
-                WithName.Default,
-                WithLifetime.ContainerControlled);
+
+            // register by convention
+
+            //container.RegisterTypes(
+            //    AllClasses.FromLoadedAssemblies(),
+            //    WithMappings.FromMatchingInterface,
+            //    WithName.Default,
+            //    WithLifetime.ContainerControlled);
 
             // TODO: Register your types here
-            // container.RegisterType<IProductRepository, ProductRepository>();
+
+            // singleton registration
+            container.RegisterType<IQTecUnitOfWork, QTecUnitOfWork>(new ContainerControlledLifetimeManager());
+            
+            // transient registration , when ever resolve is requested a new instance is returned.
+            container.RegisterType<IEmployeeManager, EmployeeManager>();
 
             // setup service locator
 
