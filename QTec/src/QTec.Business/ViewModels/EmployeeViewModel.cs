@@ -1,16 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace QTec.Business.ViewModels
+﻿namespace QTec.Business.ViewModels
 {
+    using System;
+
     /// <summary>
     /// The employee view model.
     /// </summary>
     public class EmployeeViewModel
     {
+        /// <summary>
+        /// Gets or sets the employee id.
+        /// </summary>
+        public int EmployeeId
+        {
+            get; 
+            set;
+        }
+        
         /// <summary>
         /// Gets or sets the first name.
         /// </summary>
@@ -34,9 +39,13 @@ namespace QTec.Business.ViewModels
        /// </summary>
        public DateTime DateOfBirth { get; set; }
 
-       /// <summary>
-       /// Gets or sets the age.
-       /// </summary>
-       public int Age { get; set; }
+        /// <summary>
+        /// Gets or sets the age.
+        /// </summary>
+        public int Age
+        {
+            get; 
+            set;
+        }
     }
 }

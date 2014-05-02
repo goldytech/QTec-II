@@ -18,12 +18,14 @@
         /// </summary>
         private readonly IQTecUnitOfWork qTecUnitOfWork;
 
-       /// <summary>
+        /// <summary>
         /// Initializes a new instance of the <see cref="EmployeeManager"/> class.
         /// </summary>
         /// <param name="qTecUnitOfWork">
-        /// The QTec unit of work.
+        /// The q tec unit of work.
         /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// </exception>
         public EmployeeManager(IQTecUnitOfWork qTecUnitOfWork)
         {
             if (qTecUnitOfWork == null)

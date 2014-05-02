@@ -17,6 +17,11 @@ namespace QTec.Data.Migrations
 
         protected override void Seed(QTec.Data.QTecDataContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
+
             if (!context.Designations.Any())
             {
                 AddDesignations(context);
