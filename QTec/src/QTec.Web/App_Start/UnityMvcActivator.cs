@@ -17,6 +17,7 @@ namespace QTec.Web
     using System.Linq;
     using System.Web.Mvc;
 
+    using Microsoft.Practices.Unity;
     using Microsoft.Practices.Unity.Mvc;
 
     using QTec.Business;
@@ -43,6 +44,8 @@ namespace QTec.Web
         {
             var container = UnityConfig.GetConfiguredContainer();
             container.Dispose();
+
+            //TODO Dispose IQTecUnitOfWork
         }
     }
 }

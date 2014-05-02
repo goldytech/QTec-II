@@ -90,8 +90,7 @@
         /// <summary>
         /// Gets or sets the gender.
         /// </summary>
-        [MaxLength(10)]
-        public Gender Gender
+       public Gender Gender
         {
             get;
             set;

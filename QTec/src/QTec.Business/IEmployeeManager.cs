@@ -12,6 +12,7 @@ namespace QTec.Business
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
+    using QTec.Business.ViewModels;
     using QTec.Core.Model;
 
     /// <summary>
@@ -19,7 +20,13 @@ namespace QTec.Business
     /// </summary>
     public interface IEmployeeManager
     {
-        Task<IEnumerable<Employee>> GetEmployees();
+        /// <summary>
+        /// The get employees.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
+        Task<IEnumerable<EmployeeViewModel>> GetEmployees();
        
         /// <summary>
         /// The add employee.

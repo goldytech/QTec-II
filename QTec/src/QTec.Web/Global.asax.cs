@@ -7,12 +7,15 @@ using System.Web.Routing;
 
 namespace QTec.Web
 {
+    using QTec.Business;
+
     public class MvcApplication : System.Web.HttpApplication
     {
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            AutoMapperConfig.RegisterMappings();
         }
     }
 }

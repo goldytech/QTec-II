@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
+    using QTec.Business.ViewModels;
     using QTec.Core.Model;
     using QTec.Data;
 
@@ -31,6 +32,7 @@
             }
 
             this.qTecUnitOfWork = qTecUnitOfWork;
+           
         }
 
        /// <summary>
@@ -65,10 +67,11 @@
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public async Task<IEnumerable<Employee>> GetEmployees()
+        public async Task<IEnumerable<EmployeeViewModel>> GetEmployees()
         {
             var employees = await this.qTecUnitOfWork.EmployeeRepository.RetrieveAllRecordsAsync();
-            return employees;
+            var employeesViewModel = AutoMapper.Mapper.Map<IEnumerable<Employee>, List<EmployeeViewModel>>(employees);
+            return employeesViewModel;
         }
     }
 }
