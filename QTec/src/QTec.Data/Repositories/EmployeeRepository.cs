@@ -72,5 +72,23 @@
             return Task.Run(
                 () => { this.dataContext.Employees.Remove(entity); });
         }
+
+        /// <summary>
+        /// The is email unique.
+        /// </summary>
+        /// <param name="email">
+        /// The email.
+        /// </param>
+        /// <returns>
+        /// The <see cref="bool"/>.
+        /// </returns>
+        public Task<bool> IsEmailUnique(string email)
+        {
+            return Task.Run(async () =>
+                    {
+                        var isemailExists = await this.dataContext.Employees.AnyAsync(e => e.Email.Equals(email));
+                        return isemailExists;
+                    });
+        }
     }
 }

@@ -9,6 +9,8 @@
 
 namespace QTec.Data.Contracts
 {
+    using System.Threading.Tasks;
+
     using QTec.Core.Model;
 
     /// <summary>
@@ -16,5 +18,15 @@ namespace QTec.Data.Contracts
     /// </summary>
     public interface IEmployeeRepository : IDataRepository<Employee, int>
     {
+        /// <summary>
+        /// The is email unique.
+        /// </summary>
+        /// <param name="email">
+        /// The email.
+        /// </param>
+        /// <returns>
+        /// The <see cref="bool"/>.
+        /// </returns>
+        Task<bool> IsEmailUnique(string email);
     }
 }

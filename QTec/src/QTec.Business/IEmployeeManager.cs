@@ -35,5 +35,16 @@ namespace QTec.Business
         /// The employee.
         /// </param>
         void AddEmployee(Employee employee);
+
+        /// <summary>
+        /// The is email unique.
+        /// </summary>
+        /// <param name="email">
+        ///     The email.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
+        bool IsEmailUnique(string email);
     }
 }

@@ -49,6 +49,25 @@
         }
 
         /// <summary>
+        /// The is email unique.
+        /// </summary>
+        /// <param name="email">
+        ///     The email.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
+        public  bool IsEmailUnique(string email)
+        {
+            return this.CheckEmail(email).Result;
+        }
+
+        private async Task<bool> CheckEmail(string email)
+        {
+            return await this.qTecUnitOfWork.EmployeeRepository.IsEmailUnique(email);
+        }
+
+        /// <summary>
         /// The get employee by id.
         /// </summary>
         /// <param name="id">

@@ -2,6 +2,8 @@
 {
     using System;
 
+    using QTec.Core.Model;
+
     /// <summary>
     /// The employee view model.
     /// </summary>
@@ -43,6 +45,42 @@
         /// Gets or sets the age.
         /// </summary>
         public int Age
+        {
+            get; 
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the salary.
+        /// </summary>
+        public double Salary 
+        { 
+            get;
+            set; 
+        }
+
+        /// <summary>
+        /// Gets or sets the email.
+        /// </summary>
+        public string Email
+        {
+            get; 
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the designation id.
+        /// </summary>
+        public int DesignationId
+        {
+            get; 
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the gender.
+        /// </summary>
+        public Gender Gender
         {
             get; 
             set;

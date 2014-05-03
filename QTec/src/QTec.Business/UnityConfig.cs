@@ -11,9 +11,13 @@ namespace QTec.Business
 {
     using System;
 
+    using FluentValidation;
+
     using Microsoft.Practices.ServiceLocation;
     using Microsoft.Practices.Unity;
 
+    using QTec.Business.Validators;
+    using QTec.Business.ViewModels;
     using QTec.Data;
 
     /// <summary>
@@ -65,18 +69,21 @@ namespace QTec.Business
 
             // TODO: Register your types here
 
+
+            // this registration is required if you are injecting dependencies in your validator objects.
+            container.RegisterType<IValidatorFactory, UnityValidatorFactory>(new ContainerControlledLifetimeManager());
+
             // singleton registration
             container.RegisterType<IQTecUnitOfWork, QTecUnitOfWork>(new ContainerControlledLifetimeManager());
             
             // transient registration , when ever resolve is requested a new instance is returned.
             container.RegisterType<IEmployeeManager, EmployeeManager>();
 
+            container.RegisterType<IValidator<EmployeeViewModel>, EmployeeViewModelValidator>();
+            
             // setup service locator
-
             var provider = new UnityServiceLocator(container);
             ServiceLocator.SetLocatorProvider(() => provider);
-
-            
         }
     }
 }
