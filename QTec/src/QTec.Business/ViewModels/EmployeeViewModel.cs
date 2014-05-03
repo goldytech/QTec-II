@@ -1,12 +1,23 @@
-﻿namespace QTec.Business.ViewModels
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="EmployeeViewModel.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   The employee view model.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace QTec.Business.ViewModels
 {
     using System;
 
+    using QTec.Business.Validators;
     using QTec.Core.Model;
 
     /// <summary>
     /// The employee view model.
     /// </summary>
+    //[FluentValidation.Attributes.Validator(typeof(EmployeeViewModelValidator))]
     public class EmployeeViewModel
     {
         /// <summary>

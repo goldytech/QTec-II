@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace QTec.Data
+﻿namespace QTec.Data
 {
+    using System.Threading.Tasks;
+
     using QTec.Data.Contracts;
 
     /// <summary>
@@ -19,8 +15,16 @@ namespace QTec.Data
         IEmployeeRepository EmployeeRepository { get; }
 
         /// <summary>
+        /// Gets the designation repository.
+        /// </summary>
+        IDesignationRepository DesignationRepository { get; }
+        
+        /// <summary>
         /// The save changes async.
         /// </summary>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
         Task<int> SaveChangesAsync();
     }
 }

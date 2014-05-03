@@ -79,6 +79,8 @@ namespace QTec.Business
             // transient registration , when ever resolve is requested a new instance is returned.
             container.RegisterType<IEmployeeManager, EmployeeManager>();
 
+            container.RegisterType<IDesignationManager, DesignationManager>();
+
             container.RegisterType<IValidator<EmployeeViewModel>, EmployeeViewModelValidator>();
             
             // setup service locator

@@ -3,7 +3,6 @@
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
-    using System.Runtime.InteropServices;
     using System.Threading.Tasks;
 
     using QTec.Core.Model;
@@ -14,6 +13,9 @@
     /// </summary>
     public class EmployeeRepository : IEmployeeRepository
     {
+        /// <summary>
+        /// The data context.
+        /// </summary>
         private readonly QTecDataContext dataContext;
 
         /// <summary>

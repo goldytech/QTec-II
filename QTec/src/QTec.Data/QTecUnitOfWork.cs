@@ -43,6 +43,7 @@ namespace QTec.Data
             this.dataContext = new QTecDataContext();
             this.disposed = false;
             this.EmployeeRepository = new EmployeeRepository(this.dataContext);
+            this.DesignationRepository = new DesignationRepository(this.dataContext);
         } 
         #endregion
 
@@ -51,6 +52,8 @@ namespace QTec.Data
         /// Gets the employee repository.
         /// </summary>
         public IEmployeeRepository EmployeeRepository { get; private set; }
+
+        public IDesignationRepository DesignationRepository { get; private set; }
 
         /// <summary>
         /// The save changes async.

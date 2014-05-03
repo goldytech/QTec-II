@@ -55,7 +55,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Repositories\DesignationRepository.cs" />
     <Compile Include="Contracts\IDataRepository.cs" />
+    <Compile Include="Contracts\IDesignationRepository.cs" />
     <Compile Include="Contracts\IEmployeeRepository.cs" />
     <Compile Include="IQTecUnitOfWork.cs" />
     <Compile Include="Migrations\201405012042568_InitialCreate.cs" />

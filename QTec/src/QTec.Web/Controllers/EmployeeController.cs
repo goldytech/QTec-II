@@ -1,22 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
-namespace QTec.Web.Controllers
+﻿namespace QTec.Web.Controllers
 {
+    using System.Linq;
     using System.Threading.Tasks;
+    using System.Web.Mvc;
+
+    using FluentValidation.Results;
 
     using QTec.Business;
+    using QTec.Business.Validators;
+    using QTec.Business.ViewModels;
 
     public class EmployeeController : Controller
     {
+        /// <summary>
+        /// The employee manager.
+        /// </summary>
         private readonly IEmployeeManager employeeManager;
 
-        public EmployeeController(IEmployeeManager employeeManager)
+        /// <summary>
+        /// The designation manager.
+        /// </summary>
+        private readonly IDesignationManager designationManager;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EmployeeController"/> class.
+        /// </summary>
+        /// <param name="employeeManager">
+        /// The employee manager.
+        /// </param>
+        /// <param name="designationManager">
+        /// The designation manager.
+        /// </param>
+        public EmployeeController(IEmployeeManager employeeManager, IDesignationManager designationManager)
         {
             this.employeeManager = employeeManager;
+            this.designationManager = designationManager;
         }
 
         //
@@ -30,7 +48,7 @@ namespace QTec.Web.Controllers
         public async Task<ViewResult> Index()
         {
             var employees = await this.employeeManager.GetEmployees();
-            return this.View(employees);
+            return this.View(employees.ToList());
         }
 
         //
@@ -42,26 +60,44 @@ namespace QTec.Web.Controllers
 
         //
         // GET: /Employee/Create
-        public ActionResult Create()
+        public async Task<ViewResult> Create()
         {
+            var designations = await this.designationManager.GetDesignations();
+            ViewBag.DesignationId = new SelectList(designations, "Id", "Name");
             return View();
         }
 
-        //
         // POST: /Employee/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create([Bind(Include = "EmployeeId,FirstName,LastName,DesignationId,DateOfBirth,Salary,Email,Gender")] EmployeeViewModel employee)
         {
-            try
+            EmployeeViewModelValidator validator = new EmployeeViewModelValidator();
+            ValidationResult result = validator.Validate(employee);
+            if (result.IsValid)
             {
-                // TODO: Add insert logic here
+                //ViewBag.ProductName = model.ProductName;
+                //ViewBag.ProductManufacturer = model.ProductManufacturer;
 
-                return RedirectToAction("Index");
             }
-            catch
+            else
             {
-                return View();
+                foreach (ValidationFailure failer in result.Errors)
+                {
+                    ModelState.AddModelError(failer.PropertyName, failer.ErrorMessage);
+                }
             }
+            //if (ModelState.IsValid)
+            //{
+            //    //db.Employees.Add(employee);
+            //    //await db.SaveChangesAsync();
+            //    return RedirectToAction("Index");
+            //}
+            var designations = await this.designationManager.GetDesignations();
+           ViewBag.DesignationId = new SelectList(designations.ToList(), "Id", "Name", employee.DesignationId);
+            return View(employee);
         }
 
         //
