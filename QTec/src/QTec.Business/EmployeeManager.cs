@@ -2,8 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Data.SqlClient;
     using System.Threading.Tasks;
 
+    using Microsoft.Practices.ServiceLocation;
+
+    using QTec.Business.Validators;
     using QTec.Business.ViewModels;
     using QTec.Core.Model;
     using QTec.Data;
@@ -34,22 +38,61 @@
             }
 
             this.qTecUnitOfWork = qTecUnitOfWork;
-           
-        }
 
-       /// <summary>
-        /// The add employee.
-        /// </summary>
-        /// <param name="employee">
-        /// The employee.
-        /// </param>
-        public async void AddEmployee(Employee employee)
-        {
-           await this.qTecUnitOfWork.EmployeeRepository.Insert(employee);
         }
 
         /// <summary>
-        /// The is email unique.
+        /// The add employee.
+        /// </summary>
+        /// <param name="employeeViewModel">
+        /// The employee.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
+        public Task<QTecResponse<bool>> AddEmployee(EmployeeViewModel employeeViewModel)
+        {
+            return Task.Run(async () =>
+                    {
+                        var exceptions = new Dictionary<string, string>();
+                        var response = new QTecResponse<bool>();
+                        try
+                        {
+                            var validator = new EmployeeViewModelValidator(ServiceLocator.Current.GetInstance<IEmployeeManager>());
+                            var result = validator.Validate(employeeViewModel);
+                            if (result.IsValid)
+                            {
+                                var employee = AutoMapper.Mapper.Map<EmployeeViewModel, Employee>(employeeViewModel);
+                               await this.qTecUnitOfWork.EmployeeRepository.Insert(employee);
+                               var recordsAffected = await this.qTecUnitOfWork.SaveChangesAsync();
+                                if (recordsAffected > 0)
+                                {
+                                    response.Response = true;
+                                    response.Exceptions = exceptions;    
+                                }
+                            }
+                            else
+                            {
+                                response.Response = false;
+                                foreach (var validationError in result.Errors)
+                                {
+                                    exceptions.Add(validationError.PropertyName, validationError.ErrorMessage);
+                                }
+                            }
+                        }
+                        catch (SqlException sqlException)
+                        {
+                            exceptions.Add("SqlException", sqlException.Message);
+                            response.Response = false;
+                        }
+
+                        response.Exceptions = exceptions;
+                        return response;
+                    });
+        }
+
+        /// <summary>
+        /// Check whether email unique.
         /// </summary>
         /// <param name="email">
         ///     The email.
@@ -57,16 +100,14 @@
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public  bool IsEmailUnique(string email)
+        public bool IsEmailUnique(string email)
         {
-            return this.CheckEmail(email).Result;
+
+          return this.qTecUnitOfWork.EmployeeRepository.IsEmailUnique(email);
+
         }
 
-        private async Task<bool> CheckEmail(string email)
-        {
-            return await this.qTecUnitOfWork.EmployeeRepository.IsEmailUnique(email);
-        }
-
+        
         /// <summary>
         /// The get employee by id.
         /// </summary>
@@ -88,11 +129,33 @@
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public async Task<IEnumerable<EmployeeViewModel>> GetEmployees()
+        public async Task<QTecResponse<IEnumerable<EmployeeViewModel>>> GetEmployees()
         {
-            var employees = await this.qTecUnitOfWork.EmployeeRepository.RetrieveAllRecordsAsync();
-            var employeesViewModel = AutoMapper.Mapper.Map<IEnumerable<Employee>, List<EmployeeViewModel>>(employees);
-            return employeesViewModel;
+            var exceptions = new Dictionary<string, string>();
+            IEnumerable<EmployeeViewModel> employeesViewModel = null;
+            try
+            {
+                var employees = await this.qTecUnitOfWork.EmployeeRepository.RetrieveAllRecordsAsync();
+                if (employees != null)
+                {
+                    employeesViewModel = AutoMapper.Mapper.Map<IEnumerable<Employee>, List<EmployeeViewModel>>(employees);
+                }
+            }
+            catch (SqlException sqlException)
+            {
+                exceptions.Add("SqlException", sqlException.Message);
+            }
+            catch (TaskCanceledException taskCanceledException)
+            {
+                exceptions.Add("TaskCanceledException", taskCanceledException.Message);
+            }
+
+            // TODO catch your custom business exceptions
+            return new QTecResponse<IEnumerable<EmployeeViewModel>>
+            {
+                Response = employeesViewModel,
+                Exceptions = exceptions
+            };
         }
     }
 }

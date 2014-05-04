@@ -1,4 +1,13 @@
-﻿namespace QTec.Data.Repositories
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="EmployeeRepository.cs" company="">
+//   
+// </copyright>
+// <summary>
+//   The employee repository.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace QTec.Data.Repositories
 {
     using System.Collections.Generic;
     using System.Data.Entity;
@@ -30,6 +39,15 @@
            
         }
 
+        /// <summary>
+        /// The get by id async.
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
         public Task<Employee> GetByIdAsync(int id)
         {
 
@@ -43,6 +61,12 @@
 
         }
 
+        /// <summary>
+        /// The retrieve all records async.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
         public Task<IEnumerable<Employee>> RetrieveAllRecordsAsync()
         {
             return Task.Run(async () =>
@@ -53,6 +77,15 @@
                 });
         }
 
+        /// <summary>
+        /// The insert.
+        /// </summary>
+        /// <param name="entity">
+        /// The entity.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
         public Task Insert(Employee entity)
         {
             return Task.Run(
@@ -82,15 +115,12 @@
         /// The email.
         /// </param>
         /// <returns>
-        /// The <see cref="bool"/>.
+        /// The <see cref="Task"/>.
         /// </returns>
-        public Task<bool> IsEmailUnique(string email)
+        public bool IsEmailUnique(string email)
         {
-            return Task.Run(async () =>
-                    {
-                        var isemailExists = await this.dataContext.Employees.AnyAsync(e => e.Email.Equals(email));
-                        return isemailExists;
-                    });
+            var isemailExists = this.dataContext.Employees.Any(e => e.Email.Equals(email));
+            return isemailExists;
         }
     }
 }

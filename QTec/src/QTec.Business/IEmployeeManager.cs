@@ -26,21 +26,24 @@ namespace QTec.Business
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        Task<IEnumerable<EmployeeViewModel>> GetEmployees();
-       
+        Task<QTecResponse<IEnumerable<EmployeeViewModel>>> GetEmployees();
+
         /// <summary>
         /// The add employee.
         /// </summary>
         /// <param name="employee">
-        /// The employee.
+        ///     The employee.
         /// </param>
-        void AddEmployee(Employee employee);
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
+        Task<QTecResponse<bool>> AddEmployee(EmployeeViewModel employee);
 
         /// <summary>
         /// The is email unique.
         /// </summary>
         /// <param name="email">
-        ///     The email.
+        /// The email.
         /// </param>
         /// <returns>
         /// The <see cref="Task"/>.

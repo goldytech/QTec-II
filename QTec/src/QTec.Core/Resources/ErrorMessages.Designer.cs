@@ -70,6 +70,15 @@ namespace QTec.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Designation is required.
+        /// </summary>
+        public static string DesignationRequired {
+            get {
+                return ResourceManager.GetString("DesignationRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email already exists.
         /// </summary>
         public static string EmailAlreadyExists {

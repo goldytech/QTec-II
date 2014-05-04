@@ -5,8 +5,6 @@ namespace QTec.Web
 {
     using System.Web.Optimization;
 
-    using FluentValidation.Mvc;
-
     using QTec.Business;
     using QTec.Web.App_Start;
 
@@ -18,7 +16,10 @@ namespace QTec.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             AutoMapperConfig.RegisterMappings();
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-           // FluentValidationModelValidatorProvider.Configure();
+            //FluentValidationModelValidatorProvider.Configure(provider =>
+            //{
+            //    provider.ValidatorFactory = new UnityValidatorFactory(UnityConfig.GetConfiguredContainer());
+            //});
         }
     }
 }

@@ -23,8 +23,9 @@ namespace QTec.Business
         /// The register mappings.
         /// </summary>
         public static void RegisterMappings()
-       {
-           AutoMapper.Mapper.CreateMap<Employee, EmployeeViewModel>();
+        {
+            AutoMapper.Mapper.CreateMap<EmployeeViewModel, Employee>();
+            AutoMapper.Mapper.CreateMap<Employee, EmployeeViewModel>();
            AutoMapper.Mapper.CreateMap<IEnumerable<Employee>, IEnumerable<EmployeeViewModel>>();
        }
     }

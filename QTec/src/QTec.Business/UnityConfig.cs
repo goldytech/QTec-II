@@ -86,6 +86,8 @@ namespace QTec.Business
             // setup service locator
             var provider = new UnityServiceLocator(container);
             ServiceLocator.SetLocatorProvider(() => provider);
+
+           
         }
     }
 }

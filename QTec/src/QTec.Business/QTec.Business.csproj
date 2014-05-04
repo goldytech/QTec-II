@@ -76,6 +76,7 @@
     <Compile Include="IDesignationManager.cs" />
     <Compile Include="IEmployeeManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QTecResponse.cs" />
     <Compile Include="UnityConfig.cs" />
     <Compile Include="UnityValidatorFactory.cs" />
     <Compile Include="Validators\EmployeeViewModelValidator.cs" />

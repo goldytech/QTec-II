@@ -27,6 +27,6 @@ namespace QTec.Data.Contracts
         /// <returns>
         /// The <see cref="bool"/>.
         /// </returns>
-        Task<bool> IsEmailUnique(string email);
+        bool IsEmailUnique(string email);
     }
 }

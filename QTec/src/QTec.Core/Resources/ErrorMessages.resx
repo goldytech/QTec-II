@@ -120,6 +120,9 @@
   <data name="DateOfBirthLessThanCurrentDate" xml:space="preserve">
     <value>Date of Birth Should be less than current date</value>
   </data>
+  <data name="DesignationRequired" xml:space="preserve">
+    <value>Designation is required</value>
+  </data>
   <data name="EmailAlreadyExists" xml:space="preserve">
     <value>Email already exists</value>
   </data>

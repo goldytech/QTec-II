@@ -1,10 +1,13 @@
 ﻿namespace QTec.Web.Controllers
 {
+    using System;
+    using System.Collections.Generic;
     using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
     using System.Web.Mvc;
 
-    using FluentValidation.Results;
+    using Microsoft.Practices.ServiceLocation;
 
     using QTec.Business;
     using QTec.Business.Validators;
@@ -47,8 +50,20 @@
         /// </returns>
         public async Task<ViewResult> Index()
         {
-            var employees = await this.employeeManager.GetEmployees();
-            return this.View(employees.ToList());
+            var response = await this.employeeManager.GetEmployees();
+
+            // no error occured
+            if (!response.Exceptions.Any())
+            {
+                return response.Response != null ? this.View(response.Response.ToList()) : null;
+            }
+
+            foreach (var keyValuePair in response.Exceptions)
+            {
+                this.ModelState.AddModelError(keyValuePair.Key, new Exception(keyValuePair.Value)); 
+            }
+
+            return response.Response != null ? this.View(response.Response.ToList()) : null;
         }
 
         //
@@ -74,27 +89,23 @@
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "EmployeeId,FirstName,LastName,DesignationId,DateOfBirth,Salary,Email,Gender")] EmployeeViewModel employee)
         {
-            EmployeeViewModelValidator validator = new EmployeeViewModelValidator();
-            ValidationResult result = validator.Validate(employee);
-            if (result.IsValid)
-            {
-                //ViewBag.ProductName = model.ProductName;
-                //ViewBag.ProductManufacturer = model.ProductManufacturer;
 
+            var response = await this.employeeManager.AddEmployee(employee);
+
+            // no error occured
+            if (!response.Exceptions.Any())
+            {
+              return this.RedirectToAction("Index");
             }
             else
             {
-                foreach (ValidationFailure failer in result.Errors)
+                
+                foreach (var keyValuePair in response.Exceptions)
                 {
-                    ModelState.AddModelError(failer.PropertyName, failer.ErrorMessage);
+                    this.ModelState.AddModelError(keyValuePair.Key, new Exception(keyValuePair.Value));
                 }
             }
-            //if (ModelState.IsValid)
-            //{
-            //    //db.Employees.Add(employee);
-            //    //await db.SaveChangesAsync();
-            //    return RedirectToAction("Index");
-            //}
+
             var designations = await this.designationManager.GetDesignations();
            ViewBag.DesignationId = new SelectList(designations.ToList(), "Id", "Name", employee.DesignationId);
             return View(employee);

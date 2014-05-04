@@ -10,6 +10,7 @@
 namespace QTec.Business.Validators
 {
     using System;
+    using System.Runtime.Remoting;
 
     using FluentValidation;
 
@@ -38,11 +39,12 @@ namespace QTec.Business.Validators
        public EmployeeViewModelValidator(IEmployeeManager employeeManager)
        {
            this.employeeManager = employeeManager;
-           RuleFor(e => e.FirstName).NotEmpty().WithLocalizedMessage(() => ErrorMessages.FirstNameRequired).Length(5, 10).WithLocalizedMessage(() => string.Format(ErrorMessages.FirstNameRequired, 5, 10));
+           RuleFor(e => e.FirstName).NotEmpty().WithLocalizedMessage(() => ErrorMessages.FirstNameRequired).Length(5, 10).WithLocalizedMessage(() => ErrorMessages.FirstNameRequired);
            RuleFor(e => e.LastName).NotEmpty().WithLocalizedMessage(() => ErrorMessages.LastNameRequired);
-           RuleFor(e => e.DateOfBirth).LessThan(DateTime.Today).WithLocalizedMessage(() => ErrorMessages.DateOfBirthLessThanCurrentDate);
-           RuleFor(e => e.Email).EmailAddress().WithLocalizedMessage(() => ErrorMessages.InvalidEmail).Must(email => this.employeeManager.IsEmailUnique(email)).WithLocalizedMessage(() => ErrorMessages.EmailAlreadyExists);
-           RuleFor(e => e.Salary).LessThanOrEqualTo(0).WithLocalizedMessage(() => ErrorMessages.ZeroSalary);
+           RuleFor(e => e.DateOfBirth).LessThan(DateTime.Today).WithLocalizedMessage(() => ErrorMessages.DateOfBirthLessThanCurrentDate).When(e => e.DateOfBirth != DateTime.MinValue);
+            RuleFor(e => e.Email).EmailAddress().WithLocalizedMessage(() => ErrorMessages.InvalidEmail).When(e => !string.IsNullOrEmpty(e.Email)).Must(email => !this.employeeManager.IsEmailUnique(email)).WithLocalizedMessage(() => ErrorMessages.EmailAlreadyExists);
+           RuleFor(e => e.Salary).NotEmpty().Must(salary => salary > 0).WithLocalizedMessage(() => ErrorMessages.ZeroSalary);
+          RuleFor(e => e.DesignationId).NotEmpty().WithLocalizedMessage(() => ErrorMessages.DesignationRequired);
        } 
        #endregion
    }
