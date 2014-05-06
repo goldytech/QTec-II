@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Net;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Web.Mvc;
@@ -90,7 +91,7 @@
         public async Task<ActionResult> Create([Bind(Include = "EmployeeId,FirstName,LastName,DesignationId,DateOfBirth,Salary,Email,Gender")] EmployeeViewModel employee)
         {
 
-            var response = await this.employeeManager.AddEmployee(employee);
+            var response = await this.employeeManager.SaveEmployee(employee);
 
             // no error occured
             if (!response.Exceptions.Any())
@@ -113,26 +114,45 @@
 
         //
         // GET: /Employee/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var response = await this.employeeManager.GetEmployee(id.Value);
+            if (response.Exceptions.Any())
+            {
+                return null; // TODO Goto error page
+            }
+
+            if (response.Response != null)
+            {
+                var designations = await this.designationManager.GetDesignations();
+                ViewBag.DesignationId = new SelectList(designations, "Id", "Name", response.Response.DesignationId);
+                return this.View(response.Response);
+            }
+
+            return this.HttpNotFound();
         }
 
         //
         // POST: /Employee/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public async Task<ActionResult> Edit([Bind(Include="EmployeeId,FirstName,LastName,DesignationId,DateOfBirth,Salary,Email,Gender")] EmployeeViewModel employeeViewModel)
         {
-            try
-            {
-                // TODO: Add update logic here
+            
+                 var response = await this.employeeManager.SaveEmployee(employeeViewModel);
+                if (!response.Exceptions.Any())
+                {
+                    return RedirectToAction("Index");    
+                }
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            //TODO handle the error    
+            var designations = await this.designationManager.GetDesignations();
+            ViewBag.DesignationId = new SelectList(designations, "Id", "Name", employeeViewModel.DesignationId);
+                return this.View(employeeViewModel);
         }
 
         //

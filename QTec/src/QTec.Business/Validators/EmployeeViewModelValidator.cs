@@ -42,9 +42,9 @@ namespace QTec.Business.Validators
            RuleFor(e => e.FirstName).NotEmpty().WithLocalizedMessage(() => ErrorMessages.FirstNameRequired).Length(5, 10).WithLocalizedMessage(() => ErrorMessages.FirstNameRequired);
            RuleFor(e => e.LastName).NotEmpty().WithLocalizedMessage(() => ErrorMessages.LastNameRequired);
            RuleFor(e => e.DateOfBirth).LessThan(DateTime.Today).WithLocalizedMessage(() => ErrorMessages.DateOfBirthLessThanCurrentDate).When(e => e.DateOfBirth != DateTime.MinValue);
-            RuleFor(e => e.Email).EmailAddress().WithLocalizedMessage(() => ErrorMessages.InvalidEmail).When(e => !string.IsNullOrEmpty(e.Email)).Must(email => !this.employeeManager.IsEmailUnique(email)).WithLocalizedMessage(() => ErrorMessages.EmailAlreadyExists);
+           RuleFor(e => e.Email).EmailAddress().WithLocalizedMessage(() => ErrorMessages.InvalidEmail).When(e => !string.IsNullOrEmpty(e.Email)).Must(email => !this.employeeManager.IsEmailUnique(email)).WithLocalizedMessage(() => ErrorMessages.EmailAlreadyExists).When(e => e.EmployeeId < 0);
            RuleFor(e => e.Salary).NotEmpty().Must(salary => salary > 0).WithLocalizedMessage(() => ErrorMessages.ZeroSalary);
-          RuleFor(e => e.DesignationId).NotEmpty().WithLocalizedMessage(() => ErrorMessages.DesignationRequired);
+           RuleFor(e => e.DesignationId).NotEmpty().WithLocalizedMessage(() => ErrorMessages.DesignationRequired);
        } 
        #endregion
    }

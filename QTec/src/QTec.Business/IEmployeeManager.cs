@@ -37,7 +37,7 @@ namespace QTec.Business
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        Task<QTecResponse<bool>> AddEmployee(EmployeeViewModel employee);
+        Task<QTecResponse<bool>> SaveEmployee(EmployeeViewModel employee);
 
         /// <summary>
         /// The is email unique.
@@ -49,5 +49,16 @@ namespace QTec.Business
         /// The <see cref="Task"/>.
         /// </returns>
         bool IsEmailUnique(string email);
+
+        /// <summary>
+        /// The get employee.
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
+        Task<QTecResponse<EmployeeViewModel>> GetEmployee(int id);
     }
 }

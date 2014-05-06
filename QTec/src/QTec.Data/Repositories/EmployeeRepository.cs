@@ -97,8 +97,13 @@ namespace QTec.Data.Repositories
             return Task.Run(
                 () =>
                     {
-                        this.dataContext.Employees.Attach(entity);
-                        this.dataContext.Entry(entity).State = EntityState.Modified;
+                        var orignial = this.dataContext.Employees.FirstOrDefault(e => e.EmployeeId.Equals(entity.EmployeeId));
+                        if (orignial != null)
+                        {
+                            this.dataContext.Entry(orignial).CurrentValues.SetValues(entity);
+                        }
+
+                        //this.dataContext.Entry(entity).State = EntityState.Modified;
                     });
         }
 

@@ -28,7 +28,7 @@
         /// <param name="qTecUnitOfWork">
         /// The q tec unit of work.
         /// </param>
-        /// <exception cref="ArgumentNullException">
+        /// <exception cref="ArgumentNullException">ArgumentNullException
         /// </exception>
         public EmployeeManager(IQTecUnitOfWork qTecUnitOfWork)
         {
@@ -50,7 +50,7 @@
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public Task<QTecResponse<bool>> AddEmployee(EmployeeViewModel employeeViewModel)
+        public Task<QTecResponse<bool>> SaveEmployee(EmployeeViewModel employeeViewModel)
         {
             return Task.Run(async () =>
                     {
@@ -63,7 +63,15 @@
                             if (result.IsValid)
                             {
                                 var employee = AutoMapper.Mapper.Map<EmployeeViewModel, Employee>(employeeViewModel);
-                               await this.qTecUnitOfWork.EmployeeRepository.Insert(employee);
+                                if (employeeViewModel.EmployeeId > 0)
+                                {
+                                    await this.qTecUnitOfWork.EmployeeRepository.Update(employee);
+                                }
+                                else
+                                {
+                                    await this.qTecUnitOfWork.EmployeeRepository.Insert(employee);     
+                                }
+                               
                                var recordsAffected = await this.qTecUnitOfWork.SaveChangesAsync();
                                 if (recordsAffected > 0)
                                 {
@@ -102,28 +110,44 @@
         /// </returns>
         public bool IsEmailUnique(string email)
         {
+            if (email == null)
+            {
+                throw new ArgumentNullException("email");
+            }
 
-          return this.qTecUnitOfWork.EmployeeRepository.IsEmailUnique(email);
-
+            return this.qTecUnitOfWork.EmployeeRepository.IsEmailUnique(email);
         }
 
-        
         /// <summary>
-        /// The get employee by id.
+        /// The get employee.
         /// </summary>
         /// <param name="id">
         /// The id.
         /// </param>
         /// <returns>
-        /// The <see cref="Employee"/>.
+        /// The <see cref="Task"/>.
         /// </returns>
-        public async Task<Employee> GetEmployeeById(int id)
+        public Task<QTecResponse<EmployeeViewModel>> GetEmployee(int id)
         {
-            var employee = await this.qTecUnitOfWork.EmployeeRepository.GetByIdAsync(id);
-            return employee;
+            return Task.Run(
+                async () =>
+                {
+                    var exceptions = new Dictionary<string, string>();
+                    try
+                    {
+                        var employee = await this.qTecUnitOfWork.EmployeeRepository.GetByIdAsync(id);
+                        var employeeViewModel = AutoMapper.Mapper.Map<Employee, EmployeeViewModel>(employee);
+                        return new QTecResponse<EmployeeViewModel> { Exceptions = exceptions, Response = employeeViewModel };
+                    }
+                    catch (Exception exception)
+                    {
+                        exceptions.Add("Exception", exception.Message);
+                        return new QTecResponse<EmployeeViewModel> { Exceptions = exceptions, Response = null };
+                    }
+                });
         }
 
-        /// <summary>
+       /// <summary>
         /// The get employees.
         /// </summary>
         /// <returns>
