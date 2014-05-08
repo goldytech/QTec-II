@@ -1,4 +1,5 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+﻿#region Copyright
+// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DesignationManager.cs" company="">
 //   
 // </copyright>
@@ -7,37 +8,43 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using QTec.Business;
-using QTec.Data;
-
+#endregion
 namespace QTec.Business
 {
+    #region Usings
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using QTec.Core.Model;
-    using QTec.Data;
+    using QTec.Data; 
+    #endregion
 
     /// <summary>
     /// The designation manager.
     /// </summary>
     public class DesignationManager : IDesignationManager
     {
+        #region Declarations
         /// <summary>
-        /// The qtec unit of work.
+        /// The QTec unit of work.
         /// </summary>
-        private readonly IQTecUnitOfWork qTecUnitOfWork;
+        private readonly IQTecUnitOfWork qtecunitofWork; 
+        #endregion
 
+        #region Constructor
         /// <summary>
         /// Initializes a new instance of the <see cref="DesignationManager"/> class.
         /// </summary>
-        /// <param name="qTecUnitOfWork">
-        /// The q tec unit of work.
+        /// <param name="qtecunitofWork">
+        /// The QTec unit of work.
         /// </param>
-        public DesignationManager(IQTecUnitOfWork qTecUnitOfWork)
+        public DesignationManager(IQTecUnitOfWork qtecunitofWork)
         {
-            this.qTecUnitOfWork = qTecUnitOfWork;
-        }
+            this.qtecunitofWork = qtecunitofWork;
+        } 
+        #endregion
+
+        #region IDesignationManager Implementation
 
         /// <summary>
         /// The get designations.
@@ -45,10 +52,11 @@ namespace QTec.Business
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public async Task<IEnumerable<Designation>> GetDesignations()
+       public async Task<IEnumerable<Designation>> GetDesignations()
         {
-            var designations = await this.qTecUnitOfWork.DesignationRepository.RetrieveAllRecordsAsync();
+            var designations = await this.qtecunitofWork.DesignationRepository.RetrieveAllRecordsAsync();
             return designations ?? null;
-        }
+        } 
+        #endregion
     }
 }

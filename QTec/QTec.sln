@@ -24,6 +24,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QTec.Core", "src\QTec.Core\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".solutionItems", ".solutionItems", "{DE59F5F6-FE22-404E-B652-47CFFC0B6A60}"
 	ProjectSection(SolutionItems) = preProject
+		solutionItems\CodeAnalysisDictionary.xml = solutionItems\CodeAnalysisDictionary.xml
 		solutionItems\GlobalSuppressions.cs = solutionItems\GlobalSuppressions.cs
 		solutionItems\qtec.snk = solutionItems\qtec.snk
 		solutionItems\Settings.StyleCop = solutionItems\Settings.StyleCop

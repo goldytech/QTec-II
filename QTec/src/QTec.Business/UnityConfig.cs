@@ -23,7 +23,7 @@ namespace QTec.Business
     /// <summary>
     /// Specifies the Unity configuration for the main container.
     /// </summary>
-    public class UnityConfig
+    public static class UnityConfig
     {
         #region Unity Container
 

@@ -9,7 +9,7 @@ namespace QTec.Business
     using QTec.Core.Model;
 
     /// <summary>
-    /// The DesignationManager interface.
+    /// The Designation Manager interface.
     /// </summary>
     public interface IDesignationManager
     {

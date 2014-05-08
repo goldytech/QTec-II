@@ -11,7 +11,7 @@
     /// <summary>
     /// The QTec database initializer.
     /// </summary>
-    public class QTecDbInitializer : MigrateDatabaseToLatestVersion<QTecDataContext, Configuration>
+    public class QTecDbInitializer : MigrateDatabaseToLatestVersion<QTecDataContext, CodeFirstConfiguration>
     {
         //protected override void Seed(QTecDataContext context)
         //{

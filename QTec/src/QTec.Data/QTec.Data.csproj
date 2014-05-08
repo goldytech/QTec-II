@@ -55,6 +55,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\solutionItems\GlobalSuppressions.cs">
+      <Link>GlobalSuppressions.cs</Link>
+    </Compile>
     <Compile Include="Repositories\DesignationRepository.cs" />
     <Compile Include="Contracts\IDataRepository.cs" />
     <Compile Include="Contracts\IDesignationRepository.cs" />
@@ -64,7 +67,7 @@
     <Compile Include="Migrations\201405012042568_InitialCreate.Designer.cs">
       <DependentUpon>201405012042568_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\CodeFirstConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QTecDataContext.cs" />
     <Compile Include="QTecDataContext.Views.cs" />
@@ -87,6 +90,11 @@
     <EmbeddedResource Include="Migrations\201405012042568_InitialCreate.resx">
       <DependentUpon>201405012042568_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\solutionItems\CodeAnalysisDictionary.xml">
+      <Link>CodeAnalysisDictionary.xml</Link>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

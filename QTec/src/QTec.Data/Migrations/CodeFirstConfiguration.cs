@@ -1,20 +1,40 @@
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="CodeFirstConfiguration.cs" company="name of client">
+//   
+// </copyright>
+// <summary>
+//   The code first configuration.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
 namespace QTec.Data.Migrations
 {
     using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
-
     using QTec.Core.Model;
 
-    public sealed class Configuration : DbMigrationsConfiguration<QTec.Data.QTecDataContext>
+    /// <summary>
+    /// The code first configuration.
+    /// </summary>
+    public sealed class CodeFirstConfiguration : DbMigrationsConfiguration<QTec.Data.QTecDataContext>
     {
-        public Configuration()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CodeFirstConfiguration"/> class.
+        /// </summary>
+        public CodeFirstConfiguration()
         {
-            AutomaticMigrationsEnabled = false;
-            ContextKey = "QTec.Data.QTecDataContext";
+            this.AutomaticMigrationsEnabled = false;
+            this.ContextKey = "QTec.Data.QTecDataContext";
         }
 
+        /// <summary>
+        /// The seed.
+        /// </summary>
+        /// <param name="context">
+        /// The context.
+        /// </param>
+        /// <exception cref="ArgumentNullException">Argument Null Exception</exception>
         protected override void Seed(QTec.Data.QTecDataContext context)
         {
             if (context == null)
@@ -47,7 +67,6 @@ namespace QTec.Data.Migrations
             dataContext.Designations.AddOrUpdate(new Designation { Id = 4, Name = "Team Lead" });
             dataContext.Designations.AddOrUpdate(new Designation { Id = 5, Name = "Tech Lead" });
             dataContext.Designations.AddOrUpdate(new Designation { Id = 6, Name = "QA Engineer" });
-
         }
 
         /// <summary>

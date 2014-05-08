@@ -30,15 +30,13 @@
         /// <summary>
         /// The create instance.
         /// </summary>
-        /// <param name="type">
-        /// The type.
-        /// </param>
+        /// <param name="validatorType">Validator Type</param>
         /// <returns>
         /// The <see cref="IValidator"/>.
         /// </returns>
-        public override IValidator CreateInstance(Type type)
+        public override IValidator CreateInstance(Type validatorType)
         {
-            return this.container.Resolve(type) as IValidator;
+            return this.container.Resolve(validatorType) as IValidator;
         }
     }
 }

@@ -1,5 +1,18 @@
-﻿namespace QTec.Business
+﻿#region Copyright
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="EmployeeManager.cs" company="Company Name">
+//   Copyright (c) Company Name, Inc. All rights reserved.
+// </copyright>
+// <summary>
+//   The employee manager.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+#endregion
+
+namespace QTec.Business
 {
+    #region Usings
     using System;
     using System.Collections.Generic;
     using System.Data.SqlClient;
@@ -10,37 +23,41 @@
     using QTec.Business.Validators;
     using QTec.Business.ViewModels;
     using QTec.Core.Model;
-    using QTec.Data;
+    using QTec.Data; 
+    #endregion
 
     /// <summary>
     /// The employee manager.
     /// </summary>
     public class EmployeeManager : IEmployeeManager
     {
+        #region Declarations
         /// <summary>
         /// The QTec unit of work.
         /// </summary>
-        private readonly IQTecUnitOfWork qTecUnitOfWork;
+        private readonly IQTecUnitOfWork qtecunitofWork; 
+        #endregion
 
+        #region Constructor
         /// <summary>
         /// Initializes a new instance of the <see cref="EmployeeManager"/> class.
         /// </summary>
-        /// <param name="qTecUnitOfWork">
-        /// The q tec unit of work.
+        /// <param name="qtecunitofWork">
+        /// The QTecUnitOfWork.
         /// </param>
-        /// <exception cref="ArgumentNullException">ArgumentNullException
-        /// </exception>
-        public EmployeeManager(IQTecUnitOfWork qTecUnitOfWork)
+        /// <exception cref="ArgumentNullException">Argument Null Exception</exception>
+        public EmployeeManager(IQTecUnitOfWork qtecunitofWork)
         {
-            if (qTecUnitOfWork == null)
+            if (qtecunitofWork == null)
             {
-                throw new ArgumentNullException("qTecUnitOfWork");
+                throw new ArgumentNullException("qtecunitofWork");
             }
 
-            this.qTecUnitOfWork = qTecUnitOfWork;
+            this.qtecunitofWork = qtecunitofWork;
+        } 
+        #endregion
 
-        }
-
+        #region IEmployeeManager Implementation
         /// <summary>
         /// The add employee.
         /// </summary>
@@ -65,18 +82,18 @@
                                 var employee = AutoMapper.Mapper.Map<EmployeeViewModel, Employee>(employeeViewModel);
                                 if (employeeViewModel.EmployeeId > 0)
                                 {
-                                    await this.qTecUnitOfWork.EmployeeRepository.Update(employee);
+                                    await this.qtecunitofWork.EmployeeRepository.Update(employee);
                                 }
                                 else
                                 {
-                                    await this.qTecUnitOfWork.EmployeeRepository.Insert(employee);     
+                                    await this.qtecunitofWork.EmployeeRepository.Insert(employee);
                                 }
-                               
-                               var recordsAffected = await this.qTecUnitOfWork.SaveChangesAsync();
+
+                                var recordsAffected = await this.qtecunitofWork.SaveChangesAsync();
                                 if (recordsAffected > 0)
                                 {
                                     response.Response = true;
-                                    response.Exceptions = exceptions;    
+                                    response.Exceptions = exceptions;
                                 }
                             }
                             else
@@ -115,7 +132,7 @@
                 throw new ArgumentNullException("email");
             }
 
-            return this.qTecUnitOfWork.EmployeeRepository.IsEmailUnique(email);
+            return this.qtecunitofWork.EmployeeRepository.IsEmailUnique(email);
         }
 
         /// <summary>
@@ -135,7 +152,7 @@
                     var exceptions = new Dictionary<string, string>();
                     try
                     {
-                        var employee = await this.qTecUnitOfWork.EmployeeRepository.GetByIdAsync(id);
+                        var employee = await this.qtecunitofWork.EmployeeRepository.GetByIdAsync(id);
                         var employeeViewModel = AutoMapper.Mapper.Map<Employee, EmployeeViewModel>(employee);
                         return new QTecResponse<EmployeeViewModel> { Exceptions = exceptions, Response = employeeViewModel };
                     }
@@ -147,7 +164,31 @@
                 });
         }
 
-       /// <summary>
+        /// <summary>
+        /// The delete employee.
+        /// </summary>
+        /// <param name="employeeViewModel">the employeeViewModel</param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
+        public async Task<QTecResponse<bool>> DeleteEmployee(EmployeeViewModel employeeViewModel )
+        {
+            var exceptions = new Dictionary<string, string>();
+            var isDeleted = false;
+            try
+            {
+                var employee = AutoMapper.Mapper.Map<EmployeeViewModel, Employee>(employeeViewModel);
+                await this.qtecunitofWork.EmployeeRepository.Delete(employee);
+                isDeleted = true;
+            }
+            catch (Exception exception)
+            {
+                exceptions.Add("Exception", exception.Message);
+            }
+            return new QTecResponse<bool> { Exceptions = exceptions, Response = isDeleted };
+        }
+
+        /// <summary>
         /// The get employees.
         /// </summary>
         /// <returns>
@@ -159,7 +200,7 @@
             IEnumerable<EmployeeViewModel> employeesViewModel = null;
             try
             {
-                var employees = await this.qTecUnitOfWork.EmployeeRepository.RetrieveAllRecordsAsync();
+                var employees = await this.qtecunitofWork.EmployeeRepository.RetrieveAllRecordsAsync();
                 if (employees != null)
                 {
                     employeesViewModel = AutoMapper.Mapper.Map<IEnumerable<Employee>, List<EmployeeViewModel>>(employees);
@@ -180,6 +221,7 @@
                 Response = employeesViewModel,
                 Exceptions = exceptions
             };
-        }
+        } 
+        #endregion
     }
 }
