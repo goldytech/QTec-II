@@ -1,19 +1,17 @@
 ﻿namespace QTec.Web.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Net;
-    using System.Threading;
     using System.Threading.Tasks;
     using System.Web.Mvc;
 
-    using Microsoft.Practices.ServiceLocation;
-
     using QTec.Business;
-    using QTec.Business.Validators;
     using QTec.Business.ViewModels;
 
+    /// <summary>
+    /// The employee controller.
+    /// </summary>
     public class EmployeeController : Controller
     {
         /// <summary>
@@ -41,8 +39,6 @@
             this.designationManager = designationManager;
         }
 
-        //
-        // GET: /Employee/
         /// <summary>
         /// The index.
         /// </summary>
@@ -61,7 +57,7 @@
 
             foreach (var keyValuePair in response.Exceptions)
             {
-                this.ModelState.AddModelError(keyValuePair.Key, new Exception(keyValuePair.Value)); 
+                this.ModelState.AddModelError(keyValuePair.Key, new Exception(keyValuePair.Value));
             }
 
             return response.Response != null ? this.View(response.Response.ToList()) : null;
@@ -69,10 +65,7 @@
 
         //
         // GET: /Employee/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+
 
         //
         // GET: /Employee/Create
@@ -96,11 +89,11 @@
             // no error occured
             if (!response.Exceptions.Any())
             {
-              return this.RedirectToAction("Index");
+                return this.RedirectToAction("Index");
             }
             else
             {
-                
+
                 foreach (var keyValuePair in response.Exceptions)
                 {
                     this.ModelState.AddModelError(keyValuePair.Key, new Exception(keyValuePair.Value));
@@ -108,7 +101,7 @@
             }
 
             var designations = await this.designationManager.GetDesignations();
-           ViewBag.DesignationId = new SelectList(designations.ToList(), "Id", "Name", employee.DesignationId);
+            ViewBag.DesignationId = new SelectList(designations.ToList(), "Id", "Name", employee.DesignationId);
             return View(employee);
         }
 
@@ -127,55 +120,84 @@
                 return null; // TODO Goto error page
             }
 
-            if (response.Response != null)
+            if (response.Response == null)
             {
-                var designations = await this.designationManager.GetDesignations();
-                ViewBag.DesignationId = new SelectList(designations, "Id", "Name", response.Response.DesignationId);
-                return this.View(response.Response);
+                return this.HttpNotFound();
+            }
+            var designations = await this.designationManager.GetDesignations();
+            this.ViewBag.DesignationId = new SelectList(designations, "Id", "Name", response.Response.DesignationId);
+            return this.View(response.Response);
+        }
+        /// <summary>
+        /// The edit.
+        /// </summary>
+        /// <param name="employeeViewModel">
+        /// The employee view model.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
+        [HttpPost]
+        public async Task<ActionResult> Edit([Bind(Include = "EmployeeId,FirstName,LastName,DesignationId,DateOfBirth,Salary,Email,Gender")] EmployeeViewModel employeeViewModel)
+        {
+            var response = await this.employeeManager.SaveEmployee(employeeViewModel);
+            if (!response.Exceptions.Any())
+            {
+                return this.RedirectToAction("Index");
             }
 
-            return this.HttpNotFound();
-        }
-
-        //
-        // POST: /Employee/Edit/5
-        [HttpPost]
-        public async Task<ActionResult> Edit([Bind(Include="EmployeeId,FirstName,LastName,DesignationId,DateOfBirth,Salary,Email,Gender")] EmployeeViewModel employeeViewModel)
-        {
-            
-                 var response = await this.employeeManager.SaveEmployee(employeeViewModel);
-                if (!response.Exceptions.Any())
-                {
-                    return RedirectToAction("Index");    
-                }
-
-            //TODO handle the error    
+            // TODO handle the error 
             var designations = await this.designationManager.GetDesignations();
             ViewBag.DesignationId = new SelectList(designations, "Id", "Name", employeeViewModel.DesignationId);
-                return this.View(employeeViewModel);
+            return this.View(employeeViewModel);
         }
 
-        //
-        // GET: /Employee/Delete/5
-        public ActionResult Delete(int id)
+        /// <summary>
+        /// The delete.
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
+        public async Task<ActionResult> Delete(int id)
         {
-            return View();
-        }
-
-        //
-        // POST: /Employee/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
+            var response = await this.employeeManager.GetEmployee(id);
+            if (response.Exceptions.Any())
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                return null; // TODO Goto error page
             }
-            catch
+
+            if (response.Response == null)
             {
-                return View();
+                return this.HttpNotFound();
+            }
+
+            return this.View(response.Response);
+        }
+
+        /// <summary>
+        /// The delete.
+        /// </summary>
+        /// <param name="employeeViewModel">
+        /// The employee view model.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
+        [HttpPost]
+        public async Task<ActionResult> Delete( int id,EmployeeViewModel employeeViewModel)
+        {
+            {
+                var response = await this.employeeManager.DeleteEmployee(employeeViewModel);
+                if (response.Response)
+                {
+                    return this.RedirectToAction("Index");    
+                }
+                
+                // TODO show errors
+                return this.View();
             }
         }
     }

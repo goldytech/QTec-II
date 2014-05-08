@@ -56,7 +56,7 @@ namespace QTec.Business
         public static void RegisterTypes(IUnityContainer container)
         {
             // NOTE: To load from web.config uncomment the line below. Make sure to add a Microsoft.Practices.Unity.Configuration to the using statements.
-            
+
             // container.LoadConfiguration();
 
             // register by convention
@@ -75,19 +75,17 @@ namespace QTec.Business
 
             // singleton registration
             container.RegisterType<IQTecUnitOfWork, QTecUnitOfWork>(new ContainerControlledLifetimeManager());
-            
+
             // transient registration , when ever resolve is requested a new instance is returned.
             container.RegisterType<IEmployeeManager, EmployeeManager>();
 
             container.RegisterType<IDesignationManager, DesignationManager>();
 
             container.RegisterType<IValidator<EmployeeViewModel>, EmployeeViewModelValidator>();
-            
+
             // setup service locator
             var provider = new UnityServiceLocator(container);
             ServiceLocator.SetLocatorProvider(() => provider);
-
-           
         }
     }
 }
