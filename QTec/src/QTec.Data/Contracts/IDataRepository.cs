@@ -65,12 +65,12 @@ namespace QTec.Data.Contracts
         /// <summary>
         /// The delete.
         /// </summary>
-        /// <param name="entity">
-        /// The entity.
+        /// <param name="id">
+        /// The id.
         /// </param>
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        Task Delete(TEntity entity);
+        Task Delete(TKey id);
     }
 }

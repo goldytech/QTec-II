@@ -10,70 +10,80 @@
 <div>
     <h4>Employee</h4>
     <hr />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.FirstName)
-            </dd>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeId)
+        </dt>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.LastName)
-            </dt>
+        <dd>
+            @Html.EditorFor(model => model.EmployeeId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.LastName)
-            </dd>
+        <dd>
+            @Html.EditorFor(model => model.FirstName)
+        </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.DateOfBirth)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.DateOfBirth)
-            </dd>
+        <dd>
+            @Html.EditorFor(model => model.LastName)
+        </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Salary)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfBirth)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.Salary)
-            </dd>
+        <dd>
+            @Html.EditorFor(model => model.DateOfBirth)
+        </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Email)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Salary)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.Email)
-            </dd>
+        <dd>
+            @Html.EditorFor(model => model.Salary)
+        </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Gender)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.Gender)
-            </dd>
+        <dd>
+            @Html.EditorFor(model => model.Email)
+        </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.DesignationId)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Gender)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.DesignationId)
-            </dd>
-        </dl>
+        <dd>
+            @Html.EditorFor(model => model.Gender)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DesignationId)
+        </dt>
+
+        <dd>
+            @Html.EditorFor(model => model.DesignationId)
+        </dd>
+    </dl>
+   
+    
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
     }
-    <div class="form-actions no-color">
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        @Html.ActionLink("Back to List", "Index")
-    </div>
-</div>
+ </div>

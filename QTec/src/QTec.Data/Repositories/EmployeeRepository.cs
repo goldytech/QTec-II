@@ -107,10 +107,22 @@ namespace QTec.Data.Repositories
                     });
         }
 
-        public Task Delete(Employee entity)
+        /// <summary>
+        /// The delete.
+        /// </summary>
+        /// <param name="id">
+        /// The id.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
+        public Task Delete(int id)
         {
-            return Task.Run(
-                () => { this.dataContext.Employees.Remove(entity); });
+            return Task.Run(async () =>
+                    {
+                       var employeetobeDeleted = await this.dataContext.Employees.FirstOrDefaultAsync(e => e.EmployeeId.Equals(id));
+                        this.dataContext.Employees.Remove(employeetobeDeleted);
+                    });
         }
 
         /// <summary>

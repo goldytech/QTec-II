@@ -187,10 +187,10 @@
         /// The <see cref="Task"/>.
         /// </returns>
         [HttpPost]
-        public async Task<ActionResult> Delete( int id,EmployeeViewModel employeeViewModel)
+        public async Task<ActionResult> Delete(EmployeeViewModel employeeViewModel)
         {
             {
-                var response = await this.employeeManager.DeleteEmployee(employeeViewModel);
+                var response = await this.employeeManager.DeleteEmployee(employeeViewModel.EmployeeId);
                 if (response.Response)
                 {
                     return this.RedirectToAction("Index");    

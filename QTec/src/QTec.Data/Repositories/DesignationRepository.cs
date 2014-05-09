@@ -68,7 +68,7 @@ namespace QTec.Data.Repositories
             throw new System.NotImplementedException();
         }
 
-        public Task Delete(Designation entity)
+        public Task Delete(int id)
         {
             throw new System.NotImplementedException();
         }

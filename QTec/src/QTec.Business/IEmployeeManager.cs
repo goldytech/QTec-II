@@ -62,12 +62,10 @@ namespace QTec.Business
         /// <summary>
         /// The delete employee.
         /// </summary>
-        /// <param name="employeeViewModel">
-        /// The employee view model.
-        /// </param>
+        /// <param name="id"></param>
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        Task<QTecResponse<bool>> DeleteEmployee(EmployeeViewModel employeeViewModel);
+        Task<QTecResponse<bool>> DeleteEmployee(int id);
     }
 }

@@ -167,24 +167,27 @@ namespace QTec.Business
         /// <summary>
         /// The delete employee.
         /// </summary>
-        /// <param name="employeeViewModel">the employeeViewModel</param>
+        /// <param name="id">
+        /// The id.
+        /// </param>
         /// <returns>
         /// The <see cref="Task"/>.
         /// </returns>
-        public async Task<QTecResponse<bool>> DeleteEmployee(EmployeeViewModel employeeViewModel )
+        public async Task<QTecResponse<bool>> DeleteEmployee(int id)
         {
             var exceptions = new Dictionary<string, string>();
             var isDeleted = false;
             try
             {
-                var employee = AutoMapper.Mapper.Map<EmployeeViewModel, Employee>(employeeViewModel);
-                await this.qtecunitofWork.EmployeeRepository.Delete(employee);
-                isDeleted = true;
+                await this.qtecunitofWork.EmployeeRepository.Delete(id);
+                var recordsAffected = await this.qtecunitofWork.SaveChangesAsync();
+                isDeleted = recordsAffected > 0;
             }
-            catch (Exception exception)
+            catch (InvalidOperationException exception)
             {
-                exceptions.Add("Exception", exception.Message);
+                exceptions.Add("InvalidOperationException", exception.Message);
             }
+
             return new QTecResponse<bool> { Exceptions = exceptions, Response = isDeleted };
         }
 
