@@ -91,13 +91,9 @@
             {
                 return this.RedirectToAction("Index");
             }
-            else
+            foreach (var keyValuePair in response.Exceptions)
             {
-
-                foreach (var keyValuePair in response.Exceptions)
-                {
-                    this.ModelState.AddModelError(keyValuePair.Key, new Exception(keyValuePair.Value));
-                }
+                this.ModelState.AddModelError(keyValuePair.Key, new Exception(keyValuePair.Value));
             }
 
             var designations = await this.designationManager.GetDesignations();
